@@ -43,19 +43,17 @@ public void initialize() throws IOException {
 		//Now land on booking page
 		BookingPage bk = lp.getBookingPage();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		bk.getbookNow().click();
+		//bk.getbookNow().click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		bk.getFinalCalender().click();
+		//bk.getFinalCalender().click();
 		//Now land on final booking page
-		/*FinalBooking f=bk.getFinalBookingPage();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		//f.getForm().click();
+		FinalBooking f=bk.getFinalBookingPage();
+		//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	
 		WebDriverWait wait = new WebDriverWait(driver, 100);
 		WebElement element= wait.until(ExpectedConditions.elementToBeClickable(f.getFinalCalender()));
-		Actions action1 = new Actions(driver);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		action1.moveToElement(f.getFinalCalender()).click().build().perform();
-		//f.getFinalCalender().click();
+		
+		f.getFinalCalender().click();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		/* WebDriverWait wait6 = new WebDriverWait(driver, 10);
 		    WebElement radio_name = wait6.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='book-now-button']")));*/
