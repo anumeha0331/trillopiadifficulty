@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests">
+<listeners>
+		<listener class-name="Testing.TravelSite.Listeners" />
+	</listeners>
+ 
+  <test name="Testing">
+		<classes>
+			<class name="Testing.TravelSite.Testing" />
+		</classes>
+	</test>
+	 <test name="HomePage">
+		<classes>
+			<class name="Testing.TravelSite.HomePage" />
+		</classes>
+	</test>
+	 <test name="app">
+    <classes>
+      <class name="Testing.TravelSite.AppTest"/>
+     </classes>
+ </test>
+</suite> <!-- Suite -->

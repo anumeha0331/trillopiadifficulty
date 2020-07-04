@@ -1,0 +1,4 @@
+pageObject\LogInPage.class
+Testing\TravelSite\App.class
+pageObject\LandingPage.class
+resource\Base.class
