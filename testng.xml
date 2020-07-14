@@ -5,14 +5,10 @@
 		<listener class-name="Testing.TravelSite.Listeners" />
 	</listeners>
  
-  <test name="Testing">
-		<classes>
-			<class name="Testing.TravelSite.Testing" />
-		</classes>
-	</test>
+ 
 	 <test name="HomePage">
 		<classes>
-			<class name="Testing.TravelSite.HomePage" />
+			<class name="Testing.TravelSite.mainPage" />
 		</classes>
 	</test>
 	 <test name="app">

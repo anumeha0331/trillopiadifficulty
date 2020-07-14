@@ -1,0 +1,8 @@
+14:55:49.173 [main] INFO  resource.Base - driver is initialised
+15:05:31.335 [main] INFO  resource.Base - driver is initialised
+15:05:33.679 [main] INFO  resource.Base - driver is initialised
+06:11:30.444 [main] INFO  resource.Base - driver is initialised
+06:11:32.728 [main] INFO  resource.Base - driver is initialised yes
+06:17:12.031 [TestNG-tests-1] INFO  resource.Base - driver is initialised
+06:17:14.293 [TestNG-tests-1] INFO  resource.Base - driver is initialised yes
+00:35:56.536 [main] INFO  resource.Base - driver is initialised

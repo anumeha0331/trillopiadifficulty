@@ -1,8 +1,15 @@
 package Testing.TravelSite;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,17 +19,21 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import pageObject.BookingPage;
+import pageObject.Confirm;
 import pageObject.FinalBooking;
 import pageObject.LandingPage;
+import pageObject.PaymentPage;
+import pageObject.TravelerInformation;
+import pageObject.packageDetails;
 import resource.Base;
 
 public class mainPage extends Base{
 public WebDriver driver;
-//public static Logger log = LogManager.getLogger(Base.class.getName());
+public static Logger log = LogManager.getLogger(Base.class.getName());
 @BeforeTest
 public void initialize() throws IOException {
 	driver = intializationDriver();
-	//log.info("driver is initialised");
+	log.info("driver is initialised");
 	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
 }
@@ -30,7 +41,7 @@ public void initialize() throws IOException {
 	public void Testingabc()
 	{
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		//log.info("driver is initialised");
+		log.info("driver is initialised yes");
 			driver.get(prop.getProperty("url"));
 		
 		LandingPage lp= new LandingPage(driver);
@@ -45,32 +56,63 @@ public void initialize() throws IOException {
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		//bk.getbookNow().click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		//bk.getFinalCalender().click();
+		
 		//Now land on final booking page
 		FinalBooking f=bk.getFinalBookingPage();
-		//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-	
+		ArrayList<String> allWindows = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(allWindows.get(1));
+		System.out.println(driver.getTitle());
+		
 		WebDriverWait wait = new WebDriverWait(driver, 100);
 		WebElement element= wait.until(ExpectedConditions.elementToBeClickable(f.getFinalCalender()));
 		
-		f.getFinalCalender().click();
-//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		/* WebDriverWait wait6 = new WebDriverWait(driver, 10);
-		    WebElement radio_name = wait6.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='book-now-button']")));*/
-		//driver.findElement(By.xpath("//a[contains(text(),'Show All')]"));
-		   // f.getBookNowButton();
-		//To know the total number of frames in the page
-		/*
-		 * int size = driver.findElements(By.tagName("iframe")).size();
-		 * System.out.println("total frame are:"+size);
-		 * 
-		 * //If the frame is not known for the webelement, then the output isin terms of
-		 * 1's or 0's. and when the 1 comes that position number is //the index of the
-		 * frams where the frame lies for that particular webelement for(int i=0;
-		 * i<=size; i++){ driver.switchTo().frame(i); int
-		 * total=driver.findElements(By.xpath("//form[@id='booking_form']")).size();
-		 * System.out.println(total); driver.switchTo().defaultContent(); }
-		 */	
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		//int count= driver.findElements(By.xpath("//div[@id='ui-datepicker-div']//td[@class=' available']")).size();
+		int count=f.getCountAvailableDates();
+		System.out.println("available dates are:"+ count);
+		//List<WebElement> days=driver.findElements(By.xpath("//div[@id='ui-datepicker-div']//td[@class=' available']"));
+		List<WebElement> days=f.getavailableDates();
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		//while(!driver.findElement(By.xpath("/html[1]/body[1]/div[8]/div[1]/div[1]/span[1]")).getText().contains("August"))
+		while(!f.getMonth().getText().contains("August"))
+		{
+			//driver.findElement(By.xpath("//div[@id='ui-datepicker-div']//div//span[contains(text(),'Next')]")).click();
+			f.getNxtButton().click();
+		}
+		for(int i=0;i<count;i++)
+		{
+			//String text = driver.findElements(By.xpath("//div[@id='ui-datepicker-div']//td[@class=' available']")).get(i).getText();
+			String text =f.getavailableDates().get(i).getText();
+		   if(text.equalsIgnoreCase("21"))
+		   {
+			   //driver.findElements(By.xpath("//div[@id='ui-datepicker-div']//td[@class=' available']")).get(i).click();
+			   f.getavailableDates().get(i).click();
+			   break;
+		   }
+			
+		}
+		f.getAdultPerson().click();
+		f.getAdultPerson().click();
+		packageDetails pck=f.getPackageDetailsPage();
+		TravelerInformation TInfo=pck.getTravelerInfoPage();
+		TInfo.getName().sendKeys("tester");
+		TInfo.getEmail().sendKeys("test@gmail.com");
+		TInfo.getPhnNumb().sendKeys("9878768790");
+		Confirm c=TInfo.getConfirmPage();
+		try {
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			c.getCheckBox().click();
+		  } catch (Exception e) {
+		     JavascriptExecutor executor = (JavascriptExecutor) driver;
+		     executor.executeScript("arguments[0].click();", c.getCheckBox());
+		  }
+		
+		PaymentPage p=c.getPaymentPage();
+
+		
+		
+		
 
 	}
 }
+
